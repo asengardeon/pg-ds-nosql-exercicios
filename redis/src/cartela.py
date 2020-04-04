@@ -14,4 +14,5 @@ class Cartela:
     def criar_cartela(self, key: str, quantidade_numeros: int):
         for _ in range(quantidade_numeros):
             self.client_redis.sadd(key, self.client_redis.srandmember(NUMEROS_POSSIVEIS_KEY))
-        print(self.client_redis.smembers(key))
+
+
