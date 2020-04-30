@@ -111,76 +111,69 @@ MATCH (tom:Person {name: "Tom Hanks"})-[:ACTED_IN]->(tomHanksMovies)-[relatedTo]
 * Exercise 4.1: Retrieve all movies that Tom Cruise acted in.
 #### Comando
 ~~~~ javascript
-AQUI
+MATCH (tom:Person {name: "Tom Cruise"})-[:ACTED_IN]->(tomMovies) RETURN tom,tomMovies
 ~~~~
 
 * Exercise 4.2: Retrieve all people that were born in the 70’s.
 #### Comando
 ~~~~ javascript
-AQUI
+MATCH(p:Person) where p.born >= 1970 and p.born < 1980 return p
 ~~~~
 * Exercise 4.3: Retrieve the actors who acted in the movie The Matrix
 who were born after 1960.
 #### Comando
 ~~~~ javascript
-AQUI
+MATCH(p:Person)- [:ACTED_IN]->(m:Movie {title: "The Matrix"}) WHERE p.born >= 1960 return p
 ~~~~
-* Exercise 4.4: Retrieve all movies by testing the node label and a
-property.
+* Exercise 4.4: Retrieve all movies by testing the node label and a property.
 #### Comando
 ~~~~ javascript
-AQUI
+MATCH (m) WHERE m:Movie AND m.released = 1999 RETURN m.title
 ~~~~
-* Exercise 4.5: Retrieve all people that wrote movies by testing the
-relationship between two nodes.
+* Exercise 4.5: Retrieve all people that wrote movies by testing the relationship between two nodes.
 #### Comando
 ~~~~ javascript
-AQUI
+MATCH (p)-[rel]->(m) WHERE p:Person AND type(rel) = 'WROTE' AND m:Movie RETURN p.name as Name, m.title as Movie
 ~~~~
-* Exercise 4.6: Retrieve all people in the graph that do not have a
-property.
+* Exercise 4.6: Retrieve all people in the graph that do not have a property.
 #### Comando
 ~~~~ javascript
-AQUI
+MATCH (p:Person) WHERE NOT exists(p.born) RETURN p.name as Name
 ~~~~
-* Exercise 4.7: Retrieve all people related to movies where the
-relationship has a property.
+* Exercise 4.7: Retrieve all people related to movies where the relationship has a property.
 #### Comando
 ~~~~ javascript
-AQUI
+MATCH (p:Person)-[rel]->(m:Movie) WHERE exists(rel.rating) RETURN p.name as Name, m.title as Movie, rel.rating as Rating
 ~~~~
 * Exercise 4.8: Retrieve all actors whose name begins with James.
 #### Comando
 ~~~~ javascript
-AQUI
+MATCH (p:Person)-[:ACTED_IN]->(:Movie) WHERE p.name STARTS WITH 'James' RETURN p.name
 ~~~~
-* Exercise 4.9: Retrieve all all REVIEW relationships from the graph
-with filtered results.
+* Exercise 4.9: Retrieve all all REVIEW relationships from the graph with filtered results.
 #### Comando
 ~~~~ javascript
-AQUI
-~~~~
-* Exercise 4.10: Retrieve all people who have produced a movie, but
-have not directed a movie.
+MATCH (:Person)-[r:REVIEWED]->(m:Movie) WHERE toLower(r.summary) CONTAINS 'fun' RETURN  m.title as Movie, r.summary as Review, r.rating as Rating~~~~
+
+* Exercise 4.10: Retrieve all people who have produced a movie, but have not directed a movie.
 #### Comando
 ~~~~ javascript
-AQUI
+MATCH (a:Person)-[:PRODUCED]->(m:Movie) WHERE NOT ((a)-[:DIRECTED]->(:Movie)) RETURN a.name, m.title
 ~~~~
-* Exercise 4.11: Retrieve the movies and their actors where one of the
-actors also directed the movie.
+* Exercise 4.11: Retrieve the movies and their actors where one of the actors also directed the movie.
 #### Comando
 ~~~~ javascript
-AQUI
+MATCH (p1:Person)-[:ACTED_IN]->(m:Movie)<-[:ACTED_IN]-(p2:Person) WHERE exists( (p2)-[:DIRECTED]->(m) ) RETURN  p1.name as Actor, p2.name as `Actor/Director`, m.title as Movie 
 ~~~~
-* Exercise 4.12: Retrieve all movies that were released in a set of
-years.
+* Exercise 4.12: Retrieve all movies that were released in a set of years.
 #### Comando
 ~~~~ javascript
-AQUI
+MATCH (m:Movie) WHERE m.released in [1999, 2000] RETURN m.title, m.released
 ~~~~
-* Exercise 4.13: Retrieve the movies that have an actor’s role that is
-the name of the movie.
+* Exercise 4.13: Retrieve the movies that have an actor’s role that is the name of the movie.
 #### Comando
 ~~~~ javascript
-AQUI
+MATCH (p:Person)-[r:ACTED_IN]->(m:Movie)
+WHERE m.title in r.roles
+RETURN  m.title as Movie, p.name as Actor
 ~~~~
