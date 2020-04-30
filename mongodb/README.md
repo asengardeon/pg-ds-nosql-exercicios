@@ -259,14 +259,18 @@ cachorro)
 ~~~
 10. Projete apenas o nome e sobrenome das pessoas com tipo de sangue de
 fator RH negativo
+
 #### Comando
-~~~~ javascript
-db.getCollection('italians').find({"bloodType" : {"$in": ["A-", "B-", "O-", "AB-"]}}, {"firstname": 1, "surname": 1}).count()~~~~
+~~~javascript
+db.getCollection('italians').find({"bloodType" : {"$in": ["A-", "B-", "O-", "AB-"]}}, {"firstname": 1, "surname": 1}).count()
+~~~
+
 
 #### Resultado
 ~~~json
 5045
 ~~~
+
 11. Projete apenas os animais dos italianos. Devem ser listados os animais
 com nome e idade. Não mostre o identificado do mongo (ObjectId)
 #### Comando
@@ -278,6 +282,7 @@ com nome e idade. Não mostre o identificado do mongo (ObjectId)
 ~~~json
 7572
 ~~~
+
 12. Quais são as 5 pessoas mais velhas com sobrenome Rossi?
 #### Comando
 ~~~~ javascript
@@ -350,7 +355,7 @@ db.getCollection('italians').remove(id)
 Removed 1 record(s) in 1ms
 ~~~
 15. Passou um ano. Atualize a idade de todos os italianos e dos bichanos em
-1.
+
 #### Comando
 ~~~~ javascript
  AQUI
@@ -413,4 +418,98 @@ mais de 20 e menos de 60 anos.
 #### Resultado
 ~~~json
 2061
+~~~
+
+ ## Execicio 3
+ 
+ 
+1. Liste as ações com profit acima de 0.5 (limite a 10 o resultado)
+#### Comando
+~~~~ javascript
+ db.getCollection('stocks').find({"Profit Margin": {"$gt": 0.5}}).limit(10)
+~~~~
+
+#### Resultado
+~~~json
+10
+~~~
+2. Liste as ações com perdas (limite a 10 novamente)
+#### Comando
+~~~~ javascript
+AQUI~~~~
+
+#### Resultado
+~~~json
+AQUI
+~~~
+3. Liste as 10 ações mais rentáveis
+#### Comando
+~~~~ javascript
+ db.getCollection('stocks').find({}).sort({"Performance (Year)": -1}).limit(10)
+~~~~
+
+#### Resultado
+~~~json
+10
+~~~
+4. Qual foi o setor mais rentável?
+#### Comando
+~~~~ javascript
+ AQUI
+~~~~
+
+#### Resultado
+~~~json
+AQUI
+~~~
+5. Ordene as ações pelo profit e usando um cursor, liste as ações.
+#### Comando
+~~~~ javascript
+ AQUI
+~~~~
+
+#### Resultado
+~~~json
+AQUI
+~~~
+6. Renomeie o campo “Profit Margin” para apenas “profit”.
+#### Comando
+~~~~ javascript
+ AQUI
+~~~~
+
+#### Resultado
+~~~json
+AQUI
+~~~
+7. Agora liste apenas a empresa e seu respectivo resultado
+#### Comando
+~~~~ javascript
+ AQUI
+~~~~
+
+#### Resultado
+~~~json
+AQUI
+~~~
+8. Analise as ações. É uma bola de cristal na sua mão... Quais as três ações
+você investiria?
+#### Comando
+~~~~ javascript
+ AQUI
+~~~~
+
+#### Resultado
+~~~json
+AQUI
+~~~
+9. Liste as ações agrupadas por setor
+#### Comando
+~~~~ javascript
+ AQUI
+~~~~
+
+#### Resultado
+~~~json
+AQUI
 ~~~
