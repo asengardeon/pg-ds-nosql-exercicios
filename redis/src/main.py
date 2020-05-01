@@ -16,14 +16,20 @@ if __name__ == '__main__':
 
     tem_vencedor = False
     jogador_vencedor = ""
+
+    for i in range(99):
+        r.sadd("numeros_para_sortear", i)
+
     while not tem_vencedor:
-        num = randint(0, 99)
+        num = r.spop("numeros_para_sortear")
         for jogador in jogadores:
             cartela = r.hget(jogador.player, "cartela")
             if r.sismember(cartela, num):
                 r.hincrby(jogador.player, "score", 1)
-            if r.hget(jogador.player, "score") == 15:
+            score_do_jogador = r.hget(jogador.player, "score")
+            if int(score_do_jogador) == 15:
                 tem_vencedor = True
                 jogador_vencedor = jogador.player
+                print("O jogador  vencedor foi: {}".format(jogador_vencedor))
 
-    print("O jogador  vencedor foi: %s".format(jogador_vencedor))
+

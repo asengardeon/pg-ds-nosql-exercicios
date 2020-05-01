@@ -12,7 +12,9 @@ class Cartela:
 
 
     def criar_cartela(self, key: str, quantidade_numeros: int):
-        for _ in range(quantidade_numeros):
+        while len(self.client_redis.smembers(key)) > 0:
+            self.client_redis.spop(key)
+        while len(self.client_redis.smembers(key)) < quantidade_numeros:
             self.client_redis.sadd(key, self.client_redis.srandmember(NUMEROS_POSSIVEIS_KEY))
-
+        print(f' Cartela {key} contem os numeros {self.client_redis.smembers(key)}')
 
